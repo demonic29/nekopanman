@@ -558,16 +558,11 @@ video {
   border-width: 1px;
 }
 
-.text-3xl {
-  font-size: 1.875rem;
-  line-height: 2.25rem;
-}
-
 .text-\[100px\] {
   font-size: 100px;
 }
 
-.text-gray-700 {
+.text-green-600 {
   --tw-text-opacity: 1;
-  color: rgb(55 65 81 / var(--tw-text-opacity));
+  color: rgb(22 163 74 / var(--tw-text-opacity));
 }
