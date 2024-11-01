@@ -37,12 +37,12 @@ const IntroScreen = () => {
       <div
         ref={scrollRef}
         onScroll={handleScroll}
-        className="flex overflow-x-scroll space-x-5 p-5 max-w-full scroll-smooth snap-x snap-mandatory"
+        className="flex scroll-hidden overflow-x-scroll space-x-5 p-5 max-w-full scroll-smooth snap-x snap-mandatory"
       >
         {screens.map((screen) => (
           <div
             key={screen.id}
-            className="flex-shrink-0 w-[90vw] max-w-[600px] snap-center "
+            className="flex-shrink-0 w-[90vw] scale-90 max-w-[600px] snap-center "
           >
             <div className="relative h-[500px]">
               <Image

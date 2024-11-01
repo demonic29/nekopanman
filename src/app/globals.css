@@ -5,3 +5,7 @@
 body {
     width: 390px;
 }
+
+.scroll-hidden::-webkit-scrollbar {
+    display: none;
+}

@@ -1,25 +1,31 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import BackBtn from "./BackBtn";
 import Image from "next/image";
 
 // icons
-import { FiSquare } from "react-icons/fi";
+import { FiCheckSquare, FiSquare } from "react-icons/fi";
 import { FaGoogle } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
+import { Text } from "@radix-ui/themes";
+import { FaCheckSquare } from "react-icons/fa";
 
-import logo from "../imgs/logo.png";
-import google from '../imgs/google.png'
+import google from "../imgs/google.png";
 import Button from "../../components/Button";
 import Link from "next/link";
+import Header from "./Header";
+import { Checkbox, Flex } from "@radix-ui/themes";
 const signup = () => {
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleCheckboxToggle = () => {
+    setIsChecked(!isChecked);
+  };
   return (
     <div>
-      <BackBtn navigation={"/introScreens"}/>
+      <BackBtn navigation={"/introScreens"} />
 
-      <h1 className="font-bold text-2xl text-center">新規登録</h1>
-      <div className="flex justify-center">
-        <Image src={logo} width={150} height={150} alt="nekopanman-logo" />
-      </div>
+      <Header />
 
       <div className="p-5 grid gap-6">
         <input
@@ -42,16 +48,24 @@ const signup = () => {
         />
       </div>
 
-      <div className="flex items-center gap-2 px-5 mb-5">
-        <FiSquare size={20} />
+      <div
+        className="flex items-center gap-2 px-5 mb-5 cursor-pointer"
+        onClick={handleCheckboxToggle}
+      >
+        {isChecked ? (
+          <FaCheckSquare color="purple" size={20}/>
+        ) : (
+          <FiSquare size={20} className="text-purple-500" />
+        )}
         <p>利用規約に同意する</p>
       </div>
+      
 
-      <Button title={"Sign Up"} navigation={"/signup"} />
+      <Button title={"登録"} navigation={"/signup"} />
 
       <p className="text-center mt-3 text-sm">
         すでにアカウントをお持ちですか？
-        <Link href={"/"} className="text-purple-500 font-semibold">
+        <Link href={"/login"} className="text-purple-500 font-semibold">
           {" "}
           ログイン
         </Link>
@@ -59,21 +73,12 @@ const signup = () => {
 
       <div className="p-4 mt-10">
         <div className="flex gap-2 justify-center items-center border-purple-500 rounded-md mb-2 py-3 border">
-          <Image
-            src={google}
-            width={20}
-            height={50}
-            alt="google-icon"
-          />
-          <button className="">
-            Google でログイン
-          </button>
+          <Image src={google} width={20} height={50} alt="google-icon" />
+          <button className="">Google でログイン</button>
         </div>
         <div className="flex gap-2 justify-center items-center border-purple-500 rounded-md mb-2 py-3 border">
-            <FaFacebook size={20} color="blue"/>
-          <button className="">
-            Facebook でログイン
-          </button>
+          <FaFacebook size={20} color="blue" />
+          <button className="">Facebook でログイン</button>
         </div>
       </div>
     </div>
