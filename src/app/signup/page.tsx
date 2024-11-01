@@ -7,7 +7,7 @@ import { FiSquare } from "react-icons/fi";
 import { FaGoogle } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
 
-import logo from "../imgs/logo.png";
+import logo from '../imgs/logo.png'
 import google from '../imgs/google.png'
 import Button from "../../components/Button";
 import Link from "next/link";
@@ -47,7 +47,7 @@ const signup = () => {
         <p>利用規約に同意する</p>
       </div>
 
-      <Button title={"Sign Up"} navigation={"/signup"} />
+      <Button title={"Sign Up"} navigation={"/profile"} />
 
       <p className="text-center mt-3 text-sm">
         すでにアカウントをお持ちですか？
