@@ -61,7 +61,7 @@ const signup = () => {
       </div>
       
 
-      <Button title={"登録"} navigation={"/signup"} />
+      <Button title={"登録"} navigation={"/profile"} />
 
       <p className="text-center mt-3 text-sm">
         すでにアカウントをお持ちですか？
