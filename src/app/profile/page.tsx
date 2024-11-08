@@ -1,5 +1,5 @@
 'use client'
-import React from "react";
+import React, { ChangeEvent } from "react";
 import BackBtn from "../signup/BackBtn";
 import Button from "../../components/Button";
 import Header from "../signup/Header";
@@ -10,10 +10,10 @@ import Image from "next/image";
 
 import { FaPencilAlt } from "react-icons/fa";
 
-const profile = () => {
-    const [profileImage, setProfileImage] = useState<string>(defaultLogo);
+const Profile = () => {
+    const [profileImage, setProfileImage] = useState<string>("../imgs/userprofile.png");
 
-    const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleImageChange = (e) => {
       const file = e.target.files?.[0];
       if (file) {
         const imageUrl = URL.createObjectURL(file);
@@ -75,4 +75,4 @@ const profile = () => {
     );
 };
 
-export default profile;
+export default Profile;
