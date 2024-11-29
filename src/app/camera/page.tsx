@@ -1,23 +1,28 @@
 "use client";
 
+// react_imports
 import React, { useRef, useState, useEffect } from "react";
 import Webcam from "react-webcam";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
+import dynamic from "next/dynamic";
+
+// component_imports
 import BottomNav from "./BottomNav";
 import CameraNav from "./CameraNav";
-import cameragrid from '../imgs/camera-grid.png'
 
+// imgs_imports
+import cameragrid from '../imgs/camera-grid.png'
+import logo from '../imgs/logo.png'
+
+// cloudinary_imports
+import {Cloudinary, CloudinaryImage} from '@cloudinary/url-gen';
 import { brightness } from "@cloudinary/url-gen/actions/adjust";
 import { BsBrightnessHighFill } from "react-icons/bs";
 import { MdBrightness3 } from "react-icons/md";
-
-
-import logo from '../imgs/logo.png'
-// swiper
-import { Swiper, SwiperSlide } from 'swiper/react';
-
-// Import the Cloudinary class
-import {Cloudinary, CloudinaryImage} from '@cloudinary/url-gen';
+import { cartoonify } from "@cloudinary/url-gen/actions/effect";
+import { generativeBackgroundReplace } from "@cloudinary/url-gen/actions/effect";
+import { scale } from "@cloudinary/url-gen/actions/resize";
 
 const cloudinary = new Cloudinary({
   cloud: {
@@ -39,6 +44,8 @@ const live_filters = [
   { name: "eucalyptus", css: "brightness(0.9) contrast(1.3)" },
   { name: "fes", css: "hue-rotate(180deg) saturate(1.3)" },
 ]
+
+// const Webcam = dynamic(() => import("react-webcam"), { ssr: false });
 
 const live_brightness = [
   -50,-60,-70,-80,-90,50,60,70,80,90,100,
@@ -68,12 +75,16 @@ const photo_filters = [
   "zorro"
 ]
 
-const CameraScreen = () => {
+const CameraScreen = ({navigation}) => {
   const webcamRef = useRef<Webcam>(null);
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [cldData, setCldData] = useState<any>(null);
   const [liveFilter, setLiveFilter] = useState<string>("");
   const [photoCaptured, setPhotoCaptured] = useState(false);
+  const [downloadUrl, setDownloadUrl] = useState<string>("")
+  const [changeNav, setChangeNav] = useState('default');
+
+  const [loading, setLoading] = useState(true);
   
   const scrollRef = useRef<any>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -86,30 +97,58 @@ const CameraScreen = () => {
     }
   }
   
-  const [showFilter, setShowFilter] = useState(false);
-  const toggleFilterDisplay = () => setShowFilter(prev => !prev);
-  
+  // grid
   const [showGrid, setShowGrid] = useState(false);
   const toggleGrid = () => setShowGrid(prev => !prev)
   
-  
+  // filter
   const [photoFilter, setPhotoFilter] = useState<string>("");
-  const [photoBrightness, setPhotoBrightness] = useState(100);
+  const [showFilter, setShowFilter] = useState(false);
+  const toggleFilterDisplay = () => setShowFilter(prev => !prev);
+
+  // brightness
+  const [photoBrightness, setPhotoBrightness] = useState(80);
   const [showBrightness, setShowBrightness] = useState(false);
   const toggleBrightnessDisplay = () => setShowBrightness(prev => !prev)
+  
+  // cartoonify
+  const [photoCartoonify, setPhotoCartoonify] = useState(0);
+  const [showCartoonify, setShowCartoonify] = useState(false);
+  const toggleCartoonDisplay = () => setShowCartoonify(prev => !prev);
 
+  // generate_bg
+  const [generateBg, setGenerateBg] = useState<string>("");
+  const [showGenerateBg, setShowGenerateBg] = useState(false);
+  const toggleGenerateBg = () => setShowGenerateBg(prev=>!prev);
+ 
   const cloudImage = cldData?.public_id && cloudinary.image(cldData.public_id);
-  if (cloudImage && photoFilter && photoBrightness) {
-    cloudImage.effect(`e_art:${photoFilter}`);
-    cloudImage.adjust(brightness().level(photoBrightness))
+
+  if (cloudImage) {
+    if (photoFilter) {
+        cloudImage.effect(`e_art:${photoFilter}`);
+    }
+    if (photoBrightness) {
+        const brightnessStrength = Math.min(Math.max(photoBrightness, 10), 100);
+        cloudImage.adjust(brightness().level(brightnessStrength));
+    }
+    if (photoCartoonify) {
+        const cartoonifyStrength = Math.min(Math.max(photoCartoonify, 10), 100);
+        cloudImage.effect(cartoonify().lineStrength(cartoonifyStrength));
+    }
+    // if(generateBg){
+    //   cloudImage.effect();
+    // }
+   
   }
+
   const src = cloudImage?.toURL() || imageSrc;
 
   function capturePhoto() {
     if (webcamRef.current) {
       const imageSrc = webcamRef.current.getScreenshot();
       if (imageSrc) {
-        setPhotoCaptured(true)
+        setPhotoCaptured(true);
+        setChangeNav('post-capture');
         if (typeof window !== "undefined") {
           const img = document.createElement("img");
           img.src = imageSrc;
@@ -123,6 +162,7 @@ const CameraScreen = () => {
               context.drawImage(img, 0, 0, img.width, img.height);
               const filteredImage = canvas.toDataURL("image/png");
               setImageSrc(filteredImage);
+              setDownloadUrl(filteredImage)
             }
           };
         };
@@ -130,8 +170,31 @@ const CameraScreen = () => {
     }
   }
 
+
+
   const handleBrightnessChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPhotoBrightness(parseInt(event.target.value, 10)); // Parse as integer for better control
+    const value = (parseInt(event.target.value, 10)); // Parse as integer for better control
+    setPhotoBrightness(Math.min(Math.max(value,10), 100))
+  };
+
+  const handleCartoonifyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(event.target.value, 10) || 0;
+    setPhotoCartoonify(Math.min(Math.max(value, 10), 1000)); // Clamp to 10–100 range
+  };
+
+  const handleBackgroundChange = async (event:React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      const userInput = event.target.value.trim();
+      setGenerateBg(userInput);
+      cloudImage.resize(scale().width(500)); 
+      cloudImage.effect(`e_gen_background_replace:prompt_${userInput}`);
+      const updatedImageUrl = cloudImage.toURL();
+      setImageSrc(updatedImageUrl);
+      
+    } catch (error) {
+      console.error("Error applying background effect:", error);
+      alert("Background generation timed out. Please try again later.");
+    }
   };
 
   useEffect(() => {
@@ -146,7 +209,7 @@ const CameraScreen = () => {
   }, [imageSrc]);
 
   return (
-    <div className="h-screen w-screen flex flex-col items-center relative">
+    <div className="h-dvh w-screen flex flex-col items-center relative">
         {/* {!src ? (
           <Webcam
             ref={webcamRef}
@@ -156,7 +219,14 @@ const CameraScreen = () => {
           />
        
         ) : (
-          <Image src={src} alt="Captured Image" width={500} height={500} />
+         <div className="flex justify-center items-center h-full">
+           <div  className="">
+            <div className=" text-center bg-purple-500 text-white py-2 rounded-lg">
+              <a href={downloadUrl || "#"} download='YourPhoto.png'>Download Image</a>
+            </div>
+            <Image src={src} alt="Captured Image" width={350} height={400} className="rounded-lg mt-5 mb-10"/>
+          </div>
+         </div>
         )} */}
 
         {/* <h2 className="font-bold text-2xl mb-5">Live Filters</h2> */}
@@ -204,7 +274,7 @@ const CameraScreen = () => {
           ))}
         </ul>
       </div> */}
-      <div className={`${showBrightness  ? 'hidden' : 'absolute bottom-[200px] flex items-center justify-center gap-5 w-full px-5'}`}>
+      <div className={`${!showBrightness  ? 'hidden' : 'absolute bottom-[200px] flex items-center justify-center gap-5 w-full px-5'}`}>
           <MdBrightness3 size={20} color="black" />
           <input
             type="range"
@@ -217,8 +287,42 @@ const CameraScreen = () => {
           <BsBrightnessHighFill size={30} color="15" />
       </div>
 
-      <CameraNav capture={capturePhoto} toggleFilterDisplay={toggleFilterDisplay}/>
-      <BottomNav grid={toggleGrid} brightness={toggleBrightnessDisplay}/>
+      <div className={`${!showCartoonify ? 'hidden' : 'absolute bottom-[200px] flex items-center justify-center gap-5 w-full px-5'}`}>
+          <MdBrightness3 size={20} color="black" />
+          <input
+              type="range"
+              min="10"
+              max="100"
+              value={photoCartoonify}
+              onChange={handleCartoonifyChange}
+              className="slider"
+          />
+          <BsBrightnessHighFill size={30} color="15" />
+      </div>
+
+      <div className={`${!showGenerateBg ? 'hidden' : 'absolute bottom-[200px] grid gap-2 w-full px-5'}`}>
+        <label htmlFor="background-input" className="text-sm font-medium">
+          何でもいいから、入力しや
+        </label>
+        <input
+          id="background-input"
+          type="text"
+          value={generateBg}
+          onChange={handleBackgroundChange}
+          placeholder="e.g., beach, mountains, cityscape"
+          className="border rounded px-2 py-1 w-full"
+        />
+      </div>
+
+      <CameraNav capture={capturePhoto} toggleFilterDisplay={toggleFilterDisplay} />
+      <BottomNav 
+        background={toggleGenerateBg} 
+        grid={toggleGrid} 
+        brightness={toggleBrightnessDisplay} 
+        cartoonify={toggleCartoonDisplay} 
+      />
+
+      {/* <button onClick={() => navigation.navigate('Sticker')}>click me</button> */}
     </div>
   );
 };
