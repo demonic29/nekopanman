@@ -81,7 +81,7 @@ const IntroScreen = () => {
             </Link>
             <br />
             <br />
-            <Link href="/signup" className="">
+            <Link href="/login" className="">
               ログイン
             </Link>
           </>

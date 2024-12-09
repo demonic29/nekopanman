@@ -42,11 +42,11 @@ const CameraScreen = () => {
 
     return (
         <div className="h-screen w-screen flex flex-col items-center relative">
-            {/* <Webcam
+            <Webcam
                 ref={cameraRef}
                 videoConstraints={videoConstraints}
                 className="absolute h-full top-0 left-0 w-full object-cover"
-            /> */}
+            />
             {img && (
                 <div className="mt-4">
                     <p>Captured Image:</p>
