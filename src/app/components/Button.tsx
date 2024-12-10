@@ -6,7 +6,7 @@ const Button = ({ navigation, title }) => {
     <div className="flex justify-center px-4">
       <Link
         href={navigation}
-        className="bg-purple-500 rounded-full text-white w-full text-center py-3"
+        className="bg-purple-500 rounded-full text-white text-sm w-full text-center py-3"
       >
         {title}
       </Link>

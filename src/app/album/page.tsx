@@ -7,7 +7,7 @@ import CarouselImage from "./CarouselImage";
 import { IoIosArrowForward } from "react-icons/io";
 import Image from "next/image";
 import Link from "next/link";
-import ButtonNav from "../../components/ButtonNav";
+import ButtonNav from "../components/ButtonNav";
 
 interface CatPhoto {
   id: string;

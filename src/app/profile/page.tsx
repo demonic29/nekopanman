@@ -1,7 +1,7 @@
 'use client'
 import React, { ChangeEvent } from "react";
 import BackBtn from "../signup/BackBtn";
-import Button from "../../components/Button";
+import Button from "../components/Button";
 import Header from "../signup/Header";
 import logo from "../imgs/logo.png";
 import { useState } from "react";

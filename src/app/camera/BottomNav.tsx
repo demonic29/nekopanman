@@ -7,8 +7,6 @@ import { TbCameraRotate } from "react-icons/tb";
 import { GiBabyFace } from "react-icons/gi";
 import { LuFormInput } from "react-icons/lu";
 
-
-
 const BottomNav = ({grid, brightness, cartoonify, background, mode}) => {
     
   const [active, setActive] = useState(false);

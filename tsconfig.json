@@ -32,7 +32,7 @@
     "src/app/signup/page.tsx",
     "src/app/introScreens/page.tsx",
     "src/app/signup/backBtn.jsx"
-, "src/app/camera/page.jsx"  ],
+, "src/app/camera/page.jsx", "src/app/Error.js"  ],
   "exclude": [
     "node_modules"
   ]

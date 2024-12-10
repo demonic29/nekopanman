@@ -4,10 +4,9 @@ import React from 'react'
 import { LuSearch } from "react-icons/lu";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 
-
 const Header = () => {
   return (
-    <div className='flex justify-between mt-5'>
+    <div className='flex justify-between mt-5 px-2'>
         <div>
             <h1 className='font-bold text-xl'>Nekopanman</h1>
         </div>

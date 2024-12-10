@@ -10,6 +10,7 @@ import './album.css'
 // Import required modules
 import { Navigation, EffectCoverflow , Pagination} from 'swiper/modules';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface CarouselImages {
     id: string;
@@ -54,21 +55,23 @@ const CarouselImage = () => {
             >
                 {carouselImages.map((item) => (
                     <SwiperSlide key={item.id} className="flex items-center justify-center">
-                        <div className="relative w-[250px] h-[350px] flex-shrink-0 rounded-lg overflow-hidden transform transition duration-300 hover:scale-105">
-                            <Image
-                                fill
-                                alt="Album-Carousel-Images"
-                                src={item.url}
-                                className="object-cover"
-                            />
-                            {/* Overlay with text */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent">
-                                <div className="absolute bottom-4 left-4 text-white">
-                                    <h2 className="font-bold text-lg">横浜ビーチ</h2>
-                                    <p className="text-sm">48枚</p>
+                       <Link href="/album/albumDetail">
+                            <div className="relative w-[250px] h-[350px] flex-shrink-0 rounded-lg overflow-hidden transform transition duration-300 hover:scale-105">
+                                <Image
+                                    fill
+                                    alt="Album-Carousel-Images"
+                                    src={item.url}
+                                    className="object-cover"
+                                />
+                                {/* Overlay with text */}
+                                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent">
+                                    <div className="absolute bottom-4 left-4 text-white">
+                                        <h2 className="font-bold text-lg">横浜ビーチ</h2>
+                                        <p className="text-sm">48枚</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                       </Link>
                     </SwiperSlide>
                 ))}
             </Swiper>

@@ -11,7 +11,7 @@ import { Text } from "@radix-ui/themes";
 import { FaCheckSquare } from "react-icons/fa";
 
 import google from "../imgs/google.png";
-import Button from "../../components/Button";
+import Button from "../components/Button";
 import Link from "next/link";
 import Header from "./Header";
 import { Checkbox, Flex } from "@radix-ui/themes";

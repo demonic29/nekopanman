@@ -2,11 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@import 'animate.css';
+
 html, body {
   font-family: 'Poppins', sans-serif;
   width: 390px;
 }
-
+.spinner {
+  border-right-color: transparent;
+}
 .scroll-hidden::-webkit-scrollbar {
     display: none;
 }
