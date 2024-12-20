@@ -3,10 +3,12 @@
 @tailwind utilities;
 
 @import 'animate.css';
+@import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic&display=swap');
+
 
 html, body {
-  font-family: 'Poppins', sans-serif;
-  width: 390px;
+  font-family: "Futura", sans-serif;
+  /* width: 390px; */
 }
 .spinner {
   border-right-color: transparent;

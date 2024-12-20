@@ -34,7 +34,7 @@ import CaptureBtn from "./CaptureBtn";
 // imgs_imports
 import cameragrid from "../imgs/camera-grid.png";
 import logo from "../imgs/logo.png";
-import doneImage from "../imgs/IMG_0584 1.png";
+import doneImage from "../imgs/loadingImg.png";
 
 // cloudinary_imports
 import { Cloudinary, CloudinaryImage } from "@cloudinary/url-gen";
@@ -334,7 +334,7 @@ const CameraScreen = ({ navigation }) => {
                           <Modal
                             isOpen={isInnerModalOpen}
                             onOpenChange={handleInnerModalClose}
-                            placement="bottom"
+                            placement="center"
                           >
                             <ModalContent>
                               <ModalHeader>アルバム作成</ModalHeader>

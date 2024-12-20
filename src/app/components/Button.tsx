@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Button = ({ navigation, title }) => {
   return (
-    <div className="flex justify-center px-4">
+    <div className="flex justify-center w-screen px-2">
       <Link
         href={navigation}
         className="bg-purple-500 rounded-full text-white text-sm w-full text-center py-3"

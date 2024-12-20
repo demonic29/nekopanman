@@ -34,7 +34,7 @@ const CarouselImage = () => {
     }, []);
 
     return (
-        <div className="mt-5 flex justify-center  w-full">
+        <div className="mt-5 flex justify-center w-full">
             <Swiper
                 loop={true}
                 slidesPerView={2} // Shows three slides at a time
@@ -62,6 +62,7 @@ const CarouselImage = () => {
                                     alt="Album-Carousel-Images"
                                     src={item.url}
                                     className="object-cover"
+                                    unoptimized
                                 />
                                 {/* Overlay with text */}
                                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent">

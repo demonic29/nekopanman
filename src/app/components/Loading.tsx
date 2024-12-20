@@ -1,10 +1,27 @@
 import React from 'react'
 import {Spinner} from "@nextui-org/spinner";
+import Image from 'next/image';
 
-const Loading = () => {
+import logo from '../imgs/loadingImg.png'
+
+const Loading = ({loadingText}) => {
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="spinner border-4 border-t-4 border-purple-500 rounded-full w-16 h-16 animate-spin"></div>
+    <div className="flex flex-col items-center justify-center h-screen gap-5 p-5">
+      <div className='relative h-64 w-screen'>
+        <Image
+          fill
+          src={logo}
+          alt='Logo'
+          objectFit='cover'
+          // color='white'
+        />
+      </div>
+      <div>
+        <Spinner color="default"/>
+      </div>
+      <div>
+        <p className='text-xl'>{loadingText}</p>
+      </div>
     </div>
   )
 }

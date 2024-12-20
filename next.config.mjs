@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-      domains: ['res.cloudinary.com', 'cdn2.thecatapi.com'],
+      dangerouslyAllowSVG: true,
+      domains: ['res.cloudinary.com', 'cdn2.thecatapi.com', 'firebasestorage.googleapis.com'],
     },
   };
   

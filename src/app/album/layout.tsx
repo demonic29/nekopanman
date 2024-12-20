@@ -1,12 +1,12 @@
+'use client'
 import React from 'react'
-import Page from '../album/page';
-import ErrorBoundary from '../ErrorBoundary';
-import Error from '../Error';
+import AlbumDetailLayout from './[albumDetailsId]/page'
 
 const layout = ({children}) => {
   return (
-    <div>
+    <div className='w-screen'>
       {children}
+      {/* <AlbumDetailLayout/> */}
     </div>
   )
 }
