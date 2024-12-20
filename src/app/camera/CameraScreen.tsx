@@ -4,11 +4,10 @@
 import React, { useRef, useState, useEffect } from "react";
 import Webcam from "react-webcam";
 import Image from "next/image";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 
 import { FaPlus } from "react-icons/fa";
-import { FaEdit } from "react-icons/fa";
 
 import {
   Modal,
@@ -21,8 +20,6 @@ import {
   RadioGroup,
   Radio,
   ButtonGroup,
-  Input,
-  Spinner,
 } from "@nextui-org/react";
 
 // component_imports
@@ -34,7 +31,6 @@ import CaptureBtn from "./CaptureBtn";
 // imgs_imports
 import cameragrid from "../imgs/camera-grid.png";
 import logo from "../imgs/logo.png";
-import doneImage from "../imgs/loadingImg.png";
 
 // cloudinary_imports
 import { Cloudinary, CloudinaryImage } from "@cloudinary/url-gen";
@@ -44,11 +40,6 @@ import { MdBrightness3 } from "react-icons/md";
 import { cartoonify } from "@cloudinary/url-gen/actions/effect";
 import { generativeBackgroundReplace } from "@cloudinary/url-gen/actions/effect";
 import { scale } from "@cloudinary/url-gen/actions/resize";
-import Link from "next/link";
-import SpinnerPage from "../components/Loading";
-import { useRouter } from "next/navigation";
-import Finish from "../components/Finish";
-import Loading from "../components/Loading";
 
 interface CatPhoto {
   id: string;
@@ -259,29 +250,6 @@ const CameraScreen = ({ navigation }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [modalPlacement, setModalPlacement] = React.useState("auto");
 
-  // album create
-  const [isInnerModalOpen, setIsInnerModalOpen] = useState(false);
-  const [doneAlbum, setDoneAlbum] = useState(false);
-
-  const handleInnerModalOpen = () => {
-    setIsInnerModalOpen(true);
-  };
-
-  const handleInnerModalClose = () => {
-    setIsInnerModalOpen(false);
-  };
-
-  // const [redirectAlbum, setRedirectAlbum] = useState<number>(5)
-  const handleDoneAlbum = () => {
-    setDoneAlbum(true);
-
-    setTimeout(() => {
-      router.push("/album");
-    }, 3000);
-  };
-
-  const router = useRouter();
-
   return (
     <div className="h-dvh w-screen flex flex-col items-center relative">
       {!src ? (
@@ -303,139 +271,35 @@ const CameraScreen = ({ navigation }) => {
 
               {/* create-album-modal */}
               <div className="flex flex-col gap-2 ">
-                {/* create-album-btn */}
                 <div className="bg-purple-500 text-white py-2 rounded-lg text-center">
-                  {/* <Button
+                  <Button
                     onPress={onOpen}
                     className="max-w-fit bg-purple-500 text-white"
                   >
                     アルバムに追加
-                  </Button> */}
+                  </Button>
                 </div>
-
-                {/* album-list */}
+                
                 <Modal
                   isOpen={isOpen}
-                  placement={modalPlacement}
+                  // placement={modalPlacement}
                   onOpenChange={onOpenChange}
                 >
                   <ModalContent>
                     {(onClose) => (
                       <>
                         <ModalHeader className="flex flex-col gap-1">
-                          <Button
-                            className="mt-10 bg-purple-500 text-white"
-                            onClick={handleInnerModalOpen}
-                          >
+                          <Button className="mt-10 bg-purple-500 text-white">
                             アルバム追加 <FaPlus />
                           </Button>
-
-                          {/* album create */}
-                          <Modal
-                            isOpen={isInnerModalOpen}
-                            onOpenChange={handleInnerModalClose}
-                            placement="center"
-                          >
-                            <ModalContent>
-                              <ModalHeader>アルバム作成</ModalHeader>
-                              <ModalBody>
-                                <div className="h-60 border relative">
-                                  <Image
-                                    src={logo}
-                                    alt="logo"
-                                    fill
-                                    objectFit="cover"
-                                  />
-                                  <FaEdit
-                                    className="absolute bottom-0 right-0"
-                                    size={25}
-                                  />
-                                </div>
-
-                                <div className="grid gap-7 mt-5">
-                                  <div className="grid gap-2">
-                                    <label htmlFor="" className="font-bold">
-                                      タイトル
-                                    </label>
-                                    <Input
-                                      style={{ border: 0 }}
-                                      placeholder="アルバム名入力"
-                                    />
-                                  </div>
-
-                                  <div className="grid gap-2">
-                                    <label htmlFor="" className="font-bold">
-                                      デスクリプション
-                                    </label>
-                                    <Input
-                                      style={{ border: 0 }}
-                                      placeholder="アルバム名入力"
-                                    />
-                                  </div>
-
-                                  <div className="grid gap-2">
-                                    <label htmlFor="" className="font-bold">
-                                      タグ
-                                    </label>
-                                    <FaPlus />
-                                  </div>
-                                </div>
-                              </ModalBody>
-                              <ModalFooter>
-                                <Button
-                                  onClick={handleDoneAlbum}
-                                  className="bg-purple-500 text-white"
-                                >
-                                  保存
-                                </Button>
-
-                                <Modal isOpen={doneAlbum} placement="bottom">
-                                  <ModalContent className="h-[60%]">
-                                    <ModalBody>
-                                      <div className="relative h-64">
-                                        <Image
-                                          src={doneImage}
-                                          fill
-                                          alt="album-created-image"
-                                          objectFit="cover"
-                                        />
-                                      </div>
-                                      <div>
-                                        <h1>
-                                          アルバム作成完了です。3秒後で自動にアルバムのホームページへ戻ります。
-                                        </h1>
-                                      </div>
-                                      <div className="flex justify-center my-10">
-                                        <Spinner
-                                          label="移動中..."
-                                          color="secondary"
-                                          labelColor="secondary"
-                                        />
-                                      </div>
-
-                                    </ModalBody>
-                                  </ModalContent>
-                                </Modal>
-
-                                <Button
-                                  color="danger"
-                                  variant="light"
-                                  onClick={handleInnerModalClose}
-                                >
-                                  キャンセル
-                                </Button>
-                              </ModalFooter>
-                            </ModalContent>
-                          </Modal>
                         </ModalHeader>
-
                         <ModalBody className="flex flex-wrap w-screen">
                           <div className="overflow-x-auto whitespace-nowrap hidden-scrollbar mt-3">
-                            <div className="grid grid-cols-3 gap-4">
+                            <div className="grid grid-cols-2 gap-4">
                               {catPhotos.map((catPhoto) => (
                                 <div
                                   key={catPhoto.id}
-                                  className="relative w-[100px] h-[100px] flex-shrink-0"
+                                  className="relative w-[150px] h-[150px] flex-shrink-0"
                                 >
                                   <Image
                                     src={catPhoto.url}
@@ -449,9 +313,15 @@ const CameraScreen = ({ navigation }) => {
                           </div>
                         </ModalBody>
                         <ModalFooter>
-                         
-                          <Button color="danger" onClick={onClose}>
-                            キャンセル
+                          <Button
+                            color="danger"
+                            variant="light"
+                            onPress={onClose}
+                          >
+                            Close
+                          </Button>
+                          <Button color="primary" onPress={onClose}>
+                            Action
                           </Button>
                         </ModalFooter>
                       </>
@@ -463,15 +333,15 @@ const CameraScreen = ({ navigation }) => {
             <Image
               src={src}
               alt="Captured Image"
-              fill
-              className="rounded-lg mb-10"
-              objectFit="cover"
+              width={350}
+              height={400}
+              className="rounded-lg mt-5 mb-10"
             />
           </div>
         </div>
       )}
 
-      {/* live-filter */}
+      {/* ------ live filters ------ */}
       <div
         className={`${
           !showFilter
@@ -493,11 +363,11 @@ const CameraScreen = ({ navigation }) => {
                 onClick={() => setLiveFilter(css)}
                 className="h-full w-full"
               >
-                {/* <Webcam
+                <Webcam
                     videoConstraints={{facingMode: 'user'}}
                     style={{filter: css}}
                     className="w-full object-cover h-full"
-                  /> */}
+                  />
                 {/* <Image
                     src={logo}
                     alt="logo"
@@ -512,7 +382,7 @@ const CameraScreen = ({ navigation }) => {
         </ul>
       </div>
 
-      {/* grid */}
+      {/* ------ grid ------ */}
       <div className={`${!showGrid && "hidden"}`}>
         <Image src={cameragrid} fill alt="grid" />
       </div>
@@ -530,7 +400,7 @@ const CameraScreen = ({ navigation }) => {
         </ul>
       </div> */}
 
-      {/* brightness */}
+      {/* ------ brightness ------ */}
       <div
         className={`${
           !showBrightness
@@ -550,7 +420,7 @@ const CameraScreen = ({ navigation }) => {
         <BsBrightnessHighFill size={30} color="15" />
       </div>
 
-      {/* cartoonify */}
+      {/* ------ cartoonify ------ */}
       <div
         className={`${
           !showCartoonify
@@ -570,7 +440,7 @@ const CameraScreen = ({ navigation }) => {
         <BsBrightnessHighFill size={30} color="15" />
       </div>
 
-      {/* ai-background */}
+      {/* ------ ai background change ------ */}
       <div
         className={`${
           !showGenerateBg
@@ -591,19 +461,15 @@ const CameraScreen = ({ navigation }) => {
         />
       </div>
 
-      {/* camera-btn */}
-      {
-        photoCaptured ? null : (
-          <CameraNav
-            capture={capturePhoto}
-            toggleFilterDisplay={toggleFilterDisplay}
-          />
-        )
-      }
+      {/* ------ camera nav ------ */}
+      <CameraNav
+        capture={capturePhoto}
+        toggleFilterDisplay={toggleFilterDisplay}
+      />
 
-      {/* after capture btn */}
+      {/* ------ bottom nav changed ------ */}
       {photoCaptured ? (
-        <CaptureBtn modal={onOpen} />
+        <CaptureBtn />
       ) : (
         <BottomNav
           background={toggleGenerateBg}
@@ -613,6 +479,8 @@ const CameraScreen = ({ navigation }) => {
           mode={undefined}
         />
       )}
+
+      {/* <button onClick={() => navigation.navigate('Sticker')}>click me</button> */}
     </div>
   );
 };

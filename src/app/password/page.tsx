@@ -1,6 +1,6 @@
 import React from "react";
 import BackBtn from "../signup/BackBtn";
-import Button from "../../components/Button";
+import Button from "../components/Button";
 
 const page = () => {
   return (

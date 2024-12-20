@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useRef } from "react";
 import BackBtn from "../../signup/BackBtn";
-import Button from "../../../components/Button";
+import Button from "../../components/Button"
 
 const Page = () => {
   const [code, setCode] = useState(["", "", "", ""]);

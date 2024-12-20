@@ -2,10 +2,92 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-    width: 390px;
-}
+@import 'animate.css';
+@import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic&display=swap');
 
+
+html, body {
+  font-family: "Futura", sans-serif;
+  /* width: 390px; */
+}
+.spinner {
+  border-right-color: transparent;
+}
 .scroll-hidden::-webkit-scrollbar {
     display: none;
 }
+
+/* .filter-preview:nth-child(1){
+    transform: rotate(-2deg)
+}
+.filter-preview:nth-child(2){
+    transform: rotate(-1deg)
+} */
+.filter-preview:nth-child(4){
+    height: 95px;
+}
+/* .filter-preview:nth-child(7){
+    transform: rotate(2deg)
+}.filter-preview:nth-child(6){
+    transform: rotate(1deg)
+} */
+.slidecontainer {
+    width: 100%;
+  }
+  
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 10px;
+    border-radius: 5px;
+    background: #8a0075;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: 0.2s;
+    transition: opacity 0.2s;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 50px;
+    height: 50px;
+    border: 0;
+    background-image: url('./imgs/logo.png'); /* Update this path if necessary */
+    background-size: cover;
+    cursor: pointer;
+}
+
+/* styles/globals.css or a CSS module */
+.loading-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(8px); /* Blurred background */
+    background: rgba(255, 255, 255, 0.4); /* Translucent white overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  
+  .spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(0, 0, 0, 0.1);
+    border-top: 5px solid #0070f3; /* Your theme color */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
