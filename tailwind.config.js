@@ -1,7 +1,7 @@
 import {nextui} from '@nextui-org/react';
 
 
-const flowbite = require("flowbite-react/tailwind");
+// const flowbite = require("flowbite-react/tailwind");
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -9,7 +9,8 @@ module.exports = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
-    flowbite.content(),
+    "./node_modules/flowbite/**/*.js"
+
 
   ],
   theme: {
