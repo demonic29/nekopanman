@@ -1,16 +1,13 @@
-import {nextui} from '@nextui-org/react';
+import { nextui } from '@nextui-org/react';
 
-
-// const flowbite = require("flowbite-react/tailwind");
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+const config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
     // "./node_modules/flowbite/**/*.js"
-
   ],
   theme: {
     extend: {
@@ -23,17 +20,18 @@ module.exports = {
   plugins: [
     nextui(),
     // flowbite,
-
-    function({addUtilities}){
+    function ({ addUtilities }) {
       addUtilities({
-        '.hidden-scrollbar' : {
+        '.hidden-scrollbar': {
           'scrollbar-width': 'none',
           'ms-overflow-style': 'none',
         },
-        '.hidden-scrollbar::-webkit-scrollbar':{
-          display:'none'
-        }
-      })
-    }
+        '.hidden-scrollbar::-webkit-scrollbar': {
+          display: 'none',
+        },
+      });
+    },
   ],
 };
+
+export default config;
