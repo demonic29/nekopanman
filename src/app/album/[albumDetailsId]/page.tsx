@@ -42,7 +42,7 @@ const AlbumDetailLayout = ({
       }
     }
     fetchAlbum()
-  }, [])
+  }, [params])
 
   return (
     <div className='bg-purple-900 text-white h-screen'>

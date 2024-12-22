@@ -1,7 +1,7 @@
 import {nextui} from '@nextui-org/react';
 
 
-// const flowbite = require("flowbite-react/tailwind");
+const flowbite = require("flowbite-react/tailwind");
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -23,7 +23,7 @@ module.exports = {
   },
   plugins: [
     nextui(),
-    flowbite.plugin(),
+    flowbite,
 
     function({addUtilities}){
       addUtilities({
