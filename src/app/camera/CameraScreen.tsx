@@ -469,7 +469,7 @@ const CameraScreen = ({ navigation }) => {
 
       {/* ------ bottom nav changed ------ */}
       {photoCaptured ? (
-        <CaptureBtn />
+        <CaptureBtn modal={undefined} />
       ) : (
         <BottomNav
           background={toggleGenerateBg}

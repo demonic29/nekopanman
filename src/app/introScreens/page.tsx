@@ -18,7 +18,7 @@ const IntroScreen = () => {
   ]);
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const scrollRef = useRef(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const camera = useRef();
 
@@ -37,6 +37,7 @@ const IntroScreen = () => {
       <div
         ref={scrollRef}
         onScroll={handleScroll}
+
         className="flex scroll-hidden overflow-x-scroll space-x-5 p-5 max-w-full scroll-smooth snap-x snap-mandatory"
       >
         {screens.map((screen) => (

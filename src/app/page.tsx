@@ -9,7 +9,7 @@ import { auth } from './utils/firebase/firebase'
 import { useRouter } from 'next/navigation'
 // import CameraComponent from './camera/page'
 
-const RootLayout = ({Component, pageProps}) => {
+const RootLayout = () => {
 
   const [ loading, setLoading ] = useState(false);
 

@@ -24,7 +24,7 @@ interface AlbumDetails {
   img: string;
 }
 
-const AlbumLayout = ({ params }: { params: { albumId: string } }) => {
+const AlbumLayout = () => {
   const [catPhotos, setCatPhotos] = useState<CatPhoto[]>([]);
   const [albums, setAlbums] = useState<AlbumDetails[]>([]);
   const [loading, setLoading] = useState(false);

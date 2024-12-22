@@ -47,7 +47,7 @@ import { scale } from "@cloudinary/url-gen/actions/resize";
 import Link from "next/link";
 import SpinnerPage from "../components/Loading";
 import { useRouter } from "next/navigation";
-import Finish from "../components/Finish";
+// import Finish from "../components/Finish";
 import Loading from "../components/Loading";
 
 interface CatPhoto {
@@ -104,7 +104,7 @@ const photo_filters = [
   "zorro",
 ];
 
-const CameraScreen = ({ navigation }) => {
+const CameraScreen = () => {
   const webcamRef = useRef<Webcam>(null);
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [cldData, setCldData] = useState<any>(null);
@@ -257,7 +257,7 @@ const CameraScreen = ({ navigation }) => {
   }, []);
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [modalPlacement, setModalPlacement] = React.useState("auto");
+  // const [modalPlacement, setModalPlacement] = React.useState("auto");
 
   // album create
   const [isInnerModalOpen, setIsInnerModalOpen] = useState(false);
@@ -316,7 +316,7 @@ const CameraScreen = ({ navigation }) => {
                 {/* album-list */}
                 <Modal
                   isOpen={isOpen}
-                  placement={modalPlacement}
+                  placement={"auto"}
                   onOpenChange={onOpenChange}
                 >
                   <ModalContent>

@@ -1,33 +1,37 @@
-'use client'
+"use client";
+
 import React, { useState, useRef } from "react";
 import BackBtn from "../../signup/BackBtn";
-import Button from "../../components/Button"
+import Button from "../../components/Button";
 
 const Page = () => {
   const [code, setCode] = useState(["", "", "", ""]);
-  const inputsRef = useRef([]);
+  const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
 
-  const handleChange = (value, index) => {
+  const handleChange = (value: string, index: number) => {
     if (/^\d$/.test(value)) {
       const newCode = [...code];
       newCode[index] = value;
       setCode(newCode);
 
       // Move to the next input if exists
-      if (index < inputsRef.current.length - 1) {
-        inputsRef.current[index + 1].focus();
+      if (index < inputsRef.current.length - 1 && inputsRef.current[index + 1]) {
+        inputsRef.current[index + 1]?.focus();
       }
     }
   };
 
-  const handleKeyDown = (e, index) => {
+  const handleKeyDown = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    index: number
+  ) => {
     if (e.key === "Backspace" && !code[index] && index > 0) {
-      inputsRef.current[index - 1].focus();
+      inputsRef.current[index - 1]?.focus();
     }
   };
 
   return (
-    <div className="flex flex-col min-h-screen ">
+    <div className="flex flex-col min-h-screen">
       <BackBtn navigation="/signup" />
 
       <div className="w-full max-w-md mt-10 px-4">
@@ -44,12 +48,16 @@ const Page = () => {
           <input
             key={index}
             type="text"
-            // maxLength="1"
+            maxLength={1}
             value={digit}
             onChange={(e) => handleChange(e.target.value, index)}
             onKeyDown={(e) => handleKeyDown(e, index)}
-            ref={(el) => (inputsRef.current[index] = el)}
-            className="border text-center border-purple-500 py-3 rounded-lg text-2xl focus:outline-none focus:ring-2 focus:ring-purple-500"
+            ref={(el) => {
+              inputsRef.current[index] = el;
+            }}
+                        className="border text-center border-purple-500 py-3 rounded-lg text-2xl focus:outline-none focus:ring-2 focus:ring-purple-500"
+            inputMode="numeric"
+            pattern="[0-9]*"
             required
           />
         ))}
