@@ -17,21 +17,21 @@ interface CarouselImages {
     url: string;
 }
 
-const CarouselImage = () => {
-    const [carouselImages, setCarouselImages] = useState<CarouselImages[]>([]);
+const CarouselImage = ({carouselId, carouselURL}) => {
+    // const [carouselImages, setCarouselImages] = useState<CarouselImages[]>([]);
 
-    useEffect(() => {
-        const fetchPhotos = async () => {
-            try {
-                const res = await fetch('https://api.thecatapi.com/v1/images/search?limit=10');
-                const data: CarouselImages[] = await res.json();
-                setCarouselImages(data);
-            } catch (err) {
-                console.error('Carousel Images fetch error', err);
-            }
-        };
-        fetchPhotos();
-    }, []);
+    // useEffect(() => {
+    //     const fetchPhotos = async () => {
+    //         try {
+    //             const res = await fetch('https://api.thecatapi.com/v1/images/search?limit=10');
+    //             const data: CarouselImages[] = await res.json();
+    //             setCarouselImages(data);
+    //         } catch (err) {
+    //             console.error('Carousel Images fetch error', err);
+    //         }
+    //     };
+    //     fetchPhotos();
+    // }, []);
 
     return (
         <div className="mt-5 flex justify-center w-full">
@@ -53,14 +53,13 @@ const CarouselImage = () => {
                 pagination={true}
                 modules={[Navigation, EffectCoverflow, Pagination]}
             >
-                {carouselImages.map((item) => (
-                    <SwiperSlide key={item.id} className="flex items-center justify-center">
+                <SwiperSlide key={carouselId} className="flex items-center justify-center">
                        <Link href="/album/albumDetail">
                             <div className="relative w-[250px] h-[350px] flex-shrink-0 rounded-lg overflow-hidden transform transition duration-300 hover:scale-105">
                                 <Image
                                     fill
                                     alt="Album-Carousel-Images"
-                                    src={item.url}
+                                    src={carouselURL}
                                     className="object-cover"
                                     unoptimized
                                 />
@@ -74,7 +73,6 @@ const CarouselImage = () => {
                             </div>
                        </Link>
                     </SwiperSlide>
-                ))}
             </Swiper>
         </div>
     );

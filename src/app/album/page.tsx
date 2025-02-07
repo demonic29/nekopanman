@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
-import CarouselImage from "./CarouselImage";
+import CarouselImage from './CarouselImage';
 
 // Icons
 import { IoIosArrowForward } from "react-icons/io";
@@ -77,7 +77,13 @@ const AlbumLayout = () => {
       ) : (
         <div>
           <Header />
-          <CarouselImage />
+          {/* {
+            albums.map((album, index) => (
+              <div key={album.userAlbumId || index}>
+                <CarouselImage carouselId={album.userAlbumId} carouselURL={album.img} />
+              </div>
+            ))
+          } */}
 
           {/* Recent Albums */}
           <div>

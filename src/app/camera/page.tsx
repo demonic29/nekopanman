@@ -493,19 +493,19 @@ const CameraScreen = () => {
                 onClick={() => setLiveFilter(css)}
                 className="h-full w-full"
               >
-                {/* <Webcam
+                <Webcam
                     videoConstraints={{facingMode: 'user'}}
                     style={{filter: css}}
                     className="w-full object-cover h-full"
-                  /> */}
-                {/* <Image
+                  /> 
+                 <Image
                     src={logo}
                     alt="logo"
                     width={100}
                     height={100}
                     className="object-cover h-full w-full"
                     style={{ filter: css }}
-                  /> */}
+                  />
               </button>
             </li>
           ))}

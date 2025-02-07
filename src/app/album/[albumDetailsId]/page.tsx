@@ -23,6 +23,7 @@ const AlbumDetailLayout = ({
 }: {
   params: Promise<{ albumDetailsId: string }>
 }) => {
+  
   const [showData, setShowData] = useState<AlbumDatas | null>(null)
 
   useEffect(() => {
